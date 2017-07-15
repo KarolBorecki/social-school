@@ -1,0 +1,25 @@
+{% extends "social_school/base.html" %}
+
+
+{% block body_block %}
+{% if user.is_authenticated %}
+    <a href="{% url 'groups:create' %}" class="btn btn-md btn-fill btn-warning"><span class="glyphicon glyphicon-plus-sign"></span> Create New Group!</a>
+{% endif %}
+<div class="container">
+	<div class="list-group">
+		{% for group in group_list %}
+		  <a class="list-group-item" href="{% url 'groups:index' slug=group.slug %}">
+			     <h3 class="list-group-item-heading">{{ group.name }}</h3>
+			<div class="list-group-item-text">
+				{{ group.description_html|safe }}
+				<div class="row">
+						<span class="badge">{{ group.members.count }}</span> member{{ group.members.count|pluralize }}
+				</div>
+			</div>
+		</a>
+		{% endfor %}
+	</div>
+</div>
+{% endblock body_block %}
+
+
