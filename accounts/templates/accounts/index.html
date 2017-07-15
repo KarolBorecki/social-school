@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Index</title>
-</head>
-<body>
- {% if user.is_authenticated %}
-     <h2>Welcome {{ user.username }}</h2>
- {% else %}
-     <h2>You are no logged in! <a href="{% url 'accounts:login' %}">Login</a> </h2>
- {% endif %}
-</body>
-</html>
+{% extends "accounts/base.html" %}
+
+{% block title_block %}Index{% endblock title_block %}
+
+{% block body_block %}
+  {% if user.is_authenticated %}
+      <h2>Welcome {{ user.username }}</h2>
+  {% else %}
+      <h2>You are not logged in! <a href="{% url 'accounts:login' %}">Login</a> </h2>
+  {% endif %}
+{% endblock body_block %}
+
