@@ -21,7 +21,7 @@ from .views import HomePage
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', HomePage.as_view(), name='index')
+    url(r'^', include('accounts.urls'))
 ]
 
 if settings.DEBUG:
