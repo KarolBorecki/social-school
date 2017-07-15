@@ -25,7 +25,7 @@
       <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated and perms.blog_app.add_post %}
           <li>
-            <a href="{% url 'groups:new' %}">New Group</a>
+            <a href="{% url 'groups:create' %}">New Group</a>
           </li>
         {% endif %}
         {% if user.is_authenticated %}
