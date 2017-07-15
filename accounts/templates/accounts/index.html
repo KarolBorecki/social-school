@@ -5,6 +5,10 @@
     <title>Index</title>
 </head>
 <body>
-
+ {% if user.is_authenticated %}
+     <h2>Welcome {{ user.username }}</h2>
+ {% else %}
+     <h2>You are no logged in! <a href="{% url 'accounts:login' %}">Login</a> </h2>
+ {% endif %}
 </body>
 </html>
