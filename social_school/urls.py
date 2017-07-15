@@ -17,8 +17,11 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from .views import HomePage
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', HomePage.as_view(), name='index')
 ]
 
 if settings.DEBUG:
