@@ -22,7 +22,7 @@ from .views import HomePageView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('accounts.urls'), name='accounts'),
-    url(r'^', include('groups.urls'), name='groups'),
+    url(r'^groups/', include('groups.urls'), name='groups'),
     url(r'^$', HomePageView.as_view(), name='index'),
 ]
 
