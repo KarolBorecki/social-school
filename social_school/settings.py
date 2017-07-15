@@ -54,7 +54,7 @@ ROOT_URLCONF = 'social_school.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['accounts/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
