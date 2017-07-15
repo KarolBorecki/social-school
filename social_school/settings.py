@@ -57,7 +57,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'school_social', 'templates'),
+            os.path.join(BASE_DIR, 'social_school', 'templates'),
             os.path.join(BASE_DIR, 'accounts', 'templates'),
         ],
         'APP_DIRS': True,
