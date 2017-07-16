@@ -17,13 +17,11 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from .views import HomePageView
+from .views import HomePage
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('accounts.urls'), name='accounts'),
-    url(r'^groups/', include('groups.urls'), name='groups'),
-    url(r'^$', HomePageView.as_view(), name='index'),
+    url(r'^', include('accounts.urls'))
 ]
 
 if settings.DEBUG:

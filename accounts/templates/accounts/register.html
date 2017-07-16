@@ -1,34 +1,38 @@
-{% extends "accounts/base.html" %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
 
-{% block title_block %}Register{% endblock title_block %}
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
 
-{% block head_block %}
-  <link rel="stylesheet" type="text/css" href="{% static 'accounts_style.css' %}"/>
-{% endblock head_block %}
+    <!-- Custom style for this template -->
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts_templates_style.css' %}"/>
+</head>
+<body>
 
-{% block body_block %}
-  <div class="form container">
-    <form class="form-signin" method="post">
-      {% csrf_token %}
+    <div class="form container">
+      <form class="form-signin" method="post">
+        {% csrf_token %}
 
-      <h2 class="form-signin-heading space">Please sign up</h2>
+        <h2 class="form-signin-heading space">Please sign up</h2>
 
-      <label for="inputUsername" class="sr-only">Username</label>
-      <input type="text" id="inputUsername" class="form-control" name="username" placeholder="Username" required autofocus>
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="text" id="inputUsername" class="form-control" name="username" placeholder="Username" required autofocus>
 
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="text" id="inputEmail" class="form-control" name="email" placeholder="E-mail" required>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="text" id="inputEmail" class="form-control" name="email" placeholder="E-mail" required>
 
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
 
-      <button class="btn btn-lg btn-block btn-success button" type="submit">Sign up</button>
+        <button class="btn btn-lg btn-block btn-success button" type="submit">Sign up</button>
 
-      <p align="center" class="info footer">
-        <a href="{% url 'accounts:login' %}">Login</a>
-      </p>
-    </form>
-  </div>
-{% endblock body_block %}
-
+        <p align="center" class="info footer">
+            <a href="{% url 'accounts:login' %}">Login</a>
+        </p>
+      </form>
+    </div>
+</body>
+</html>
