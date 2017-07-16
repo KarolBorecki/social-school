@@ -5,41 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <title>{% block title_block %}{% endblock title_block %}</title>
 </head>
 <body>
 
-<nav class="navbar navbar-default site-nav">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#toggle-nav" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="{% url 'groups:list' %}">Groups</a>
-    </div>
-    <div class="collapse navbar-collapse" id="toggle-nav">
-      <ul class="nav navbar-nav navbar-right">
-        {% if user.is_authenticated and perms.blog_app.add_post %}
-          <li>
-            <a href="{% url 'groups:create' %}">New Group</a>
-          </li>
-        {% endif %}
-        {% if user.is_authenticated %}
-          <li>
-            <a href="{% url 'accounts:logout' %}">Log out</a>
-          </li>
-        {% else %}
-          <li><a class='nav navbar-right' href="{% url 'accounts:login' %}">Login</a></li>
-          <li><a class='nav navbar-right' href="{% url 'accounts:register' %}">Signup</a></li>
-        {% endif %}
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+{% include "social_school/partials/_nav.html" %}
 
 {% block body_block %}
 
