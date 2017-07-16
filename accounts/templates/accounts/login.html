@@ -3,8 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+
+    <!-- Custom style for this template -->
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts_templates_style.css' %}"/>
 </head>
 <body>
+    <div class="form container">
+      <form class="form-signin" method="post">
+        {% csrf_token %}
+        <h2 class="form-signin-heading space">Please sign in</h2>
 
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="text" id="inputUsername" class="form-control" name="username" placeholder="Username" required>
+
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+
+        <button class="btn btn-lg btn-block btn-success button" type="submit">Sign in</button>
+
+        <p class="info" align="center">
+           <a href="#">I forgot my password</a>
+        </p>
+
+        <p align="center" class="info footer">
+            <a href="{% url 'accounts:register' %}"> Register</a>
+        </p>
+      </form>
+    </div>
 </body>
 </html>
