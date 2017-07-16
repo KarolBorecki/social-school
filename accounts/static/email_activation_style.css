@@ -1,0 +1,11 @@
+body{
+    background: #333333;
+    width: 100%;
+}
+.link{
+    color: #595959;
+}
+    .link:hover{
+        text-decoration: none;
+        text-shadow: 2px 2px 2px #505050;
+    }

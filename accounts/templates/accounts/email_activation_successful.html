@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Activation</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+
+    <!-- Custom style for this template -->
+    <link rel="stylesheet" type="text/css" href="{% static 'email_activation_style.css' %}"/>
+
+</head>
+<body>
+    <div class="alert alert-success container" role="alert" style="margin-top: 30px">
+        <h5><strong>Well done!</strong> You successfully Activate your account! <a class="link" href="{% url 'accounts:login' %}">Login</a>.</h5>
+    </div>
+</body>
+</html>
