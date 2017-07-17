@@ -2,10 +2,11 @@
 
 {% block title_block %}Email Activation Successful{% endblock title_block%}
 
-{% block head_block %}
-    <!-- Custom style for this template -->
+{% load staticfiles %}
+{% block head %}
+    {{block.super}}
     <link rel="stylesheet" type="text/css" href="{% static 'email_activation_style.css' %}"/>
-{% endblock head_block %}
+{% endblock head %}
 
 {% block body_block %}
     <div class="alert alert-success container" role="alert" style="margin-top: 30px">

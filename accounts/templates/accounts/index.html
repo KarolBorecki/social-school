@@ -2,8 +2,6 @@
 
 {% block title_block %}Index{% endblock title_block%}
 
-{% block head_block %} {% endblock head_block %}
-
 {% block body_block %}
    {% if user.is_authenticated %}
        <h2>Welcome {{ user.username }}</h2>

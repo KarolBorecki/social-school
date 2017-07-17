@@ -84,7 +84,7 @@ class LoginView(TemplateView):
 @method_decorator(csrf_protect, name='post')
 class PasswordResetView(generic.FormView):
     form_class = PasswordResetForm
-    template_name = ''
+    template_name = 'accounts/password_reset.html'
 
     def post(self, request):
         form = self.form_class(request.POST or None)

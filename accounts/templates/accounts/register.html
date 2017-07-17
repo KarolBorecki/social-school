@@ -2,10 +2,11 @@
 
 {% block title_block %}Email Activation Successful{% endblock title_block%}
 
-{% block head_block %}
-    <!-- Custom style for this template -->
+{% load staticfiles %}
+{% block head %}
+    {{block.super}}
     <link rel="stylesheet" type="text/css" href="{% static 'accounts_templates_style.css' %}"/>
-{% endblock head_block %}
+{% endblock head %}
 
 {% block body_block %}
     <div class="form container">
@@ -25,6 +26,9 @@
 
         <button class="btn btn-lg btn-block btn-success button" type="submit">Sign up</button>
 
+          <p class="info" align="center">
+           <a href="{% url 'accounts:password_reset' %}"> I forgot my password</a>
+        </p>
         <p align="center" class="info footer">
             <a href="{% url 'accounts:login' %}">Login</a>
         </p>
