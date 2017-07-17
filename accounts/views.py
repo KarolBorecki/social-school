@@ -82,7 +82,7 @@ class LoginView(TemplateView):
 
 
 @method_decorator(csrf_protect, name='post')
-class PasswordResetVIew(generic.FormView):
+class PasswordResetView(generic.FormView):
     form_class = PasswordResetForm
     template_name = ''
 
