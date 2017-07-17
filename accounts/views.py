@@ -1,11 +1,13 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
+from django.views import generic
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView, TemplateView
 
-from accounts.forms import UserRegistrationForm, LoginForm
+from accounts.forms import UserRegistrationForm, LoginForm, PasswordResetForm
 
 
 class IndexView(TemplateView):
@@ -25,10 +27,19 @@ class RegisterView(CreateView):
 
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
+            user_email = form.cleaned_data['email']
             user.set_password(password)
             user.save()
 
             user = authenticate(username=username, password=password)
+
+            send_mail(
+                'Social School - Email Activation',
+                'Link to email activation',
+                'Our_email',
+                [user_email],
+                fail_silently=False,
+            )
 
             if user is not None:
                 if user.is_active:
@@ -67,5 +78,30 @@ class LoginView(TemplateView):
 
     def get(self, request):
         form = self.form_class(request.POST or None)
+        return render(request, self.template_name, {'form': form})
+
+
+@method_decorator(csrf_protect, name='post')
+class PasswordResetVIew(generic.FormView):
+    form_class = PasswordResetForm
+    template_name = ''
+
+    def post(self, request):
+        form = self.form_class(request.POST or None)
+
+        if form.is_valid():
+            user_email = form.cleaned_data['email']
+
+            if User.objects.filter(email=user_email).exists():
+                send_mail(
+                    'Social School - Password Reset',
+                    form.generate_new_pass(),
+                    'Our_email',
+                    [user_email],
+                    fail_silently=False,
+                )
+                return redirect('/')
+            else:
+                raise form.ValidationError("Looks like a user with that email doesn't exists")
         return render(request, self.template_name, {'form': form})
 
