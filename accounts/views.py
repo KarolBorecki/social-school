@@ -68,3 +68,4 @@ class LoginView(TemplateView):
     def get(self, request):
         form = self.form_class(request.POST or None)
         return render(request, self.template_name, {'form': form})
+
