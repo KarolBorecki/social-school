@@ -1,0 +1,13 @@
+.link a{
+    color: whitesmoke;
+}
+
+.link a:hover{
+    color: whitesmoke;
+    background: none;
+    text-shadow: 2px 2px 2px #505050;
+}
+
+.navbar-inverse{
+    background: #262626;
+}

@@ -3,10 +3,12 @@
 {% block title_block %}Index{% endblock title_block%}
 
 {% block body_block %}
-   {% if user.is_authenticated %}
-       <h2>Welcome {{ user.username }}</h2>
-       <h4><a href="{% url 'accounts:logout' %}">Logout</a></h4>
-   {% else %}
-       <h2>You are no logged in! <a href="{% url 'accounts:login' %}">Login</a> </h2>
-   {% endif %}
+    <div class="container">
+       {% if user.is_authenticated %}
+           <h2>Welcome {{ user.username }}</h2>
+           <h4><a href="{% url 'accounts:logout' %}">Logout</a></h4>
+       {% else %}
+           <h2>You are no logged in! <a href="{% url 'accounts:login' %}">Login</a> </h2>
+       {% endif %}
+    </div>
 {% endblock body_block%}
