@@ -125,6 +125,7 @@ USE_TZ = True
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     os.path.join(BASE_DIR, 'accounts', 'static'),
+    os.path.join(BASE_DIR, 'social_school', 'static'),
 ]
 STATIC_URL = '/static/'
 

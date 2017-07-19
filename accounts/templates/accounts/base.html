@@ -36,10 +36,9 @@
         </div>
     </nav>
 
-    <div class="container">
-        {% block body_block %}
-        {% endblock body_block %}
-    </div>
+    {% block body_block %}
+
+    {% endblock body_block %}
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>

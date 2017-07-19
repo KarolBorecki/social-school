@@ -6,35 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'index_base_style.css' %}">
+
     <title>{% block title_block %}{% endblock title_block %}</title>
 </head>
 <body>
- <nav class="navbar navbar-inverse navbar-static-top">
-     <div class="container">
-         <div class="navbar-header link">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{% url 'accounts:welcome_page' %}">Project name</a>
-         </div>
+    <div class="col-sm-3 col-md-2 sidebar menu">
+        <ul class="nav nav-sidebar">
+            <li><h2 class="logo">Social School</h2></li>
+        </ul>
 
-         <div id="navbar" class="navbar-collapse collapse navbar-right">
-            <ul class="nav navbar-nav">
-                <li class="link"><a href="{% url 'accounts:login' %}">Login</a></li>
-                <li class="link"><a href="{% url 'accounts:register' %}">Register</a></li>
-            </ul>
-         </div>
-     </div>
- </nav>
+        <div class="divider"></div>
 
-{% block body_block %}
+        <ul class="nav nav-sidebar">
+            <li><h3>Groups</h3></li>
+                <li class="link"><a href="#">{{ user.username }}</a></li> <!--Write here all user's groups-->
+        </ul>
+        <div class="divider"></div>
+        <ul class="nav nav-sidebar">
+            <li><h3>Friends</h3></li>
+            {% for user in users_list %}
+                <li class="link"><a href="#">{{ user.username }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 
-{% endblock body_block %}
+    <div class="container content">
+        {% block body_block %}
+        {% endblock body_block %}
+    </div>
 
-<script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <div class="user_info">
+        <img src="{{ user.profile_picture.url }}"/>
+        <h3>Hello: <strong>{{ user.username }}</strong></h3>
+
+        <div class="divider"></div>
+
+        <ul class="nav nav-sidebar">
+            <li><h3>Notifications:</h3></li>
+            <li class="link"><a href="#">@{{ user.username }}</a></li> <!--Write here all user's notifications-->
+        </ul>
+    </div>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 </html>
