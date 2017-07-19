@@ -131,6 +131,8 @@ STATIC_URL = '/static/'
 INTERNAL_IPS = ['127.0.0.1', ]
 
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = "/login/"
+LOGOUT_REDIRECT_URL = '/welcome/'
 
 if DEBUG:
     EMAIL_HOST = 'localhost'
