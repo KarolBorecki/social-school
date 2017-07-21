@@ -1,14 +1,18 @@
 {% extends 'accounts/base.html' %}
 
-{% block title_block %}Index{% endblock title_block%}
+{% block title_block %}Social School - Welcome!{% endblock title_block%}
+
+{% load staticfiles %}
+{% block head %}
+    {{block.super}}
+    <link rel="stylesheet" type="text/css" href="{% static 'index_style.css' %}"/>
+{% endblock head %}
 
 {% block body_block %}
-    <div class="container">
-       {% if user.is_authenticated %}
-           <h2>Welcome {{ user.username }}</h2>
-           <h4><a href="{% url 'accounts:logout' %}">Logout</a></h4>
-       {% else %}
-           <h2>You are no logged in! <a href="{% url 'accounts:login' %}">Login</a> </h2>
-       {% endif %}
+    <div class="body">
+        <div class="header">
+            <h1>Social School</h1>
+            <p>Let your school be modern!</p>
+        </div>
     </div>
 {% endblock body_block%}
