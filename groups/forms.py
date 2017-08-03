@@ -1,6 +1,6 @@
 from django import forms
 
-from groups.models import Post, Comment
+from groups.models import Post, Comment, Group
 
 
 class PostCreateForm(forms.ModelForm):
@@ -11,7 +11,7 @@ class PostCreateForm(forms.ModelForm):
         model = Post
         fields = [
             'title',
-            'text'
+            'text',
         ]
 
 
@@ -21,5 +21,17 @@ class CommentCreateForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = [
-            'text'
+            'text',
+        ]
+
+
+class GroupCreateForm(forms.ModelForm):
+    name = forms.CharField()
+    description = forms.Textarea()
+
+    class Meta:
+        model = Group
+        fields = [
+            'name',
+            'description',
         ]
