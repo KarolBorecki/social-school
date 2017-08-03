@@ -95,8 +95,7 @@ class PasswordResetView(generic.FormView):
                 )
                 return redirect('/')
             else:
-                raise form.ValidationError("Looks like a user with that email doesn't exists")
-        return render(request, self.template_name, {'form': form})
+                return render(request, self.template_name, {'form': form})
 
 
 def email_activation_view(request, user_id):

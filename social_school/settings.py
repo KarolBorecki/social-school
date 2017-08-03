@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# noinspection PyUnresolvedReferences
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
