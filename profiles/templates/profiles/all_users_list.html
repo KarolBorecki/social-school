@@ -1,0 +1,29 @@
+{% extends "social_school/base.html" %}
+
+{% block body_block %}
+    <div class="container">
+        <div class="page-header">
+            <h1>All Users</h1>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th><h3>Username</h3></th>
+                <th><h3>E-mail</h3></th>
+                <th><h3></h3></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in user_list %}
+                <tr>
+                    <td><h4>@{{ user.username }}{% if user == request.user %} (You){% endif %}</h4></td>
+                    <td><h4>{{ user.email }}</h4></td>
+                    <td><h4><a href="">See profile</a></h4></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock body_block %}
+
+
