@@ -69,9 +69,13 @@ class PostView(LoginRequiredMixin, generic.TemplateView):
             return render(request, self.template_name, {'form': form})
 
 
-class CreateGroupView(LoginRequiredMixin, generic.CreateView):
+class CreateGroupView(LoginRequiredMixin, generic.View):
     template_name = 'groups/group_create_form.html'
     form_class = GroupCreateForm
+
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST or None)

@@ -1,3 +1,10 @@
 from django.db import models
+from django.utils import timezone
 
-# Create your models here.
+from accounts.models import Profile
+
+
+class Notification(models.Model):
+    text = models.CharField(max_length=200)
+    sender = models.ForeignKey(Profile)
+    send_date = models.DateTimeField(default=timezone.now)
