@@ -1,33 +1,100 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 
-from .models import Group, GroupMember
+from groups.forms import PostCreateForm, CommentCreateForm, GroupCreateForm
+from .models import Group, GroupMember, Post, Comment
+
+
+class GroupListView(LoginRequiredMixin, generic.ListView):
+    model = Group
+
+
+class GroupIndexView(LoginRequiredMixin, generic.DetailView):
+    template_name = 'groups/group_main_page.html'
+    form_class = PostCreateForm
+    context_object_name = 'group'
+
+    def get_queryset(self):
+        return Group.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(GroupIndexView, self).get_context_data(**kwargs)
+        return context
+
+    def post(self, request,  *args, **kwargs):
+        form = self.form_class(request.POST or None)
+
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            text = form.cleaned_data['text']
+            group = Group.objects.filter(slug=self.kwargs.get('slug')).get()
+            author = request.user
+
+            post = Post(title=title, text=text, group=group, author=author)
+            post.save()
+
+            return HttpResponseRedirect(reverse("groups:post_details", kwargs={'pk': post.id}))
+        else:
+            return render(request, self.template_name, {'form': form})
+
+
+class PostView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'groups/post_detail.html'
+    form_class = CommentCreateForm
+    context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super(PostView, self).get_context_data(**kwargs)
+        context['post'] = Post.objects.filter(pk=self.kwargs.get('pk')).get()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST or None)
+
+        if form.is_valid():
+            text = form.cleaned_data['text']
+            post = Post.objects.filter(id=self.kwargs.get('pk')).get()
+            author = request.user
+
+            comment = Comment(text=text, post=post, author=author)
+            comment.save()
+
+            return HttpResponseRedirect(reverse('groups:post_details', kwargs={'pk': self.kwargs.get('pk')}))
+        else:
+            return render(request, self.template_name, {'form': form})
 
 
 class CreateGroupView(LoginRequiredMixin, generic.CreateView):
-    fields = ("name", "description")
-    model = Group
+    template_name = 'groups/group_create_form.html'
+    form_class = GroupCreateForm
 
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST or None)
 
-class GroupIndexView(generic.DetailView):
-    model = Group
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            description = form.cleaned_data['description']
 
+            group = Group(name=name, description=description)
+            group.save()
 
-class GroupListView(generic.ListView):
-    model = Group
+            return HttpResponseRedirect(reverse('groups:join_group', kwargs={'slug': group.slug}))
+        else:
+            return render(request, self.template_name, {'form': form})
 
 
 class JoinGroupView(LoginRequiredMixin, generic.RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
-        return reverse("groups:index", kwargs={"slug": self.kwargs.get("slug")})
+        return reverse('groups:index', kwargs={'slug': self.kwargs.get('slug')})
 
     def get(self, request, *args, **kwargs):
-        group = get_object_or_404(Group, slug=self.kwargs.get("slug"))
+        group = get_object_or_404(Group, slug=self.kwargs.get('slug'))
 
         try:
             GroupMember.objects.create(user=self.request.user, group=group)
@@ -50,14 +117,14 @@ class JoinGroupView(LoginRequiredMixin, generic.RedirectView):
 class LeaveGroupView(LoginRequiredMixin, generic.RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
-        return reverse("groups:index", kwargs={"slug": self.kwargs.get("slug")})
+        return reverse('groups:index', kwargs={'slug': self.kwargs.get('slug')})
 
     def get(self, request, *args, **kwargs):
 
         try:
             membership = GroupMember.objects.filter(
                 user=self.request.user,
-                group__slug=self.kwargs.get("slug")
+                group__slug=self.kwargs.get('slug')
             ).get()
 
         except GroupMember.DoesNotExist:
@@ -72,3 +139,4 @@ class LeaveGroupView(LoginRequiredMixin, generic.RedirectView):
                 "You have successfully left this group."
             )
         return super().get(request, *args, **kwargs)
+

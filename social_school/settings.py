@@ -146,4 +146,4 @@ if DEBUG:
     EMAIL_HOST_USER = 'here our email'
     EMAIL_HOST_PASSWORD = 'here our password to email'
     EMAIL_USE_TLS = True
-    DEFAULT_FROM_EMAIL = 'here our email' #using my email for testing
+    DEFAULT_FROM_EMAIL = 'here our email'

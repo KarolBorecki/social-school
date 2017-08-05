@@ -2,7 +2,7 @@
 
 {% block body_block %}
 <h4>Create A New Group</h4>
-  <form method="POST" action="{% url 'groups:create' %}" id="groupForm">
+  <form method="POST" action="{% url 'groups:create_group' %}" id="groupForm">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Create" class="btn btn-primary btn-large">
