@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
-from django.views import generic
+from django.views import generic, View
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.generic import CreateView, TemplateView
 
@@ -15,11 +15,10 @@ class IndexView(TemplateView):
 
 
 @method_decorator(csrf_protect, name='post')
-class LoginView(TemplateView):
+class LoginView(View):
     form_class = LoginForm
     template_name = 'accounts/login.html'
 
-    @csrf_protect
     def post(self, request):
         form = self.form_class(request.POST or None)
 
@@ -42,9 +41,13 @@ class LoginView(TemplateView):
 
 @method_decorator(csrf_protect, name='post')
 @method_decorator(csrf_exempt, name='post')
-class RegisterView(CreateView):
+class RegisterView(View):
     form_class = UserRegistrationForm
     template_name = 'accounts/register.html'
+
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         form = self.form_class(request.POST or None)

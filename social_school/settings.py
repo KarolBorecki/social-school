@@ -140,10 +140,12 @@ LOGIN_REDIRECT_URL = '/index/'
 LOGIN_URL = "/login/"
 LOGOUT_REDIRECT_URL = '/welcome/'
 
+DEFAULT_USER_PICTURE_PATH = "accounts/static/img/default-user.png"
+
 if DEBUG:
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_PORT = 587
-    EMAIL_HOST_USER = 'here our email'
-    EMAIL_HOST_PASSWORD = 'here our password to email'
+    EMAIL_HOST_USER = 'karol.boreck@gmail.com'
+    EMAIL_HOST_PASSWORD = 'qseft135/K'
     EMAIL_USE_TLS = True
-    DEFAULT_FROM_EMAIL = 'here our email'
+    DEFAULT_FROM_EMAIL = 'karol.boreck@gmail.com'
