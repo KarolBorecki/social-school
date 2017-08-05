@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import generic
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.generic import CreateView, TemplateView
 
 from accounts.forms import UserRegistrationForm, LoginForm, PasswordResetForm
@@ -19,6 +19,7 @@ class LoginView(TemplateView):
     form_class = LoginForm
     template_name = 'accounts/login.html'
 
+    @csrf_protect
     def post(self, request):
         form = self.form_class(request.POST or None)
 
@@ -40,6 +41,7 @@ class LoginView(TemplateView):
 
 
 @method_decorator(csrf_protect, name='post')
+@method_decorator(csrf_exempt, name='post')
 class RegisterView(CreateView):
     form_class = UserRegistrationForm
     template_name = 'accounts/register.html'
@@ -61,7 +63,7 @@ class RegisterView(CreateView):
             send_mail(
                 'Social School - Email Activation',
                 'Link to email activation',
-                'Our_email',
+                'karol.boreck@gmail.com',
                 [user_email],
                 fail_silently=False,
             )

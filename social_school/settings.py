@@ -141,9 +141,9 @@ LOGIN_URL = "/login/"
 LOGOUT_REDIRECT_URL = '/welcome/'
 
 if DEBUG:
-    EMAIL_HOST = 'localhost'
-    EMAIL_PORT = 1025
-    EMAIL_HOST_USER = ''
-    EMAIL_HOST_PASSWORD = ''
-    EMAIL_USE_TLS = False
-    DEFAULT_FROM_EMAIL = 'testing@example.com'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = 'here our email'
+    EMAIL_HOST_PASSWORD = 'here our password to email'
+    EMAIL_USE_TLS = True
+    DEFAULT_FROM_EMAIL = 'here our email' #using my email for testing
