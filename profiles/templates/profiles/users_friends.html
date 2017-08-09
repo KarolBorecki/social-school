@@ -3,7 +3,7 @@
 {% block body_block %}
     <div class="container">
         <div class="page-header">
-            <h1>All Users</h1>
+            <h1>Your friends:</h1>
         </div>
         <table class="table">
             <thead>
@@ -14,10 +14,11 @@
             </tr>
             </thead>
             <tbody>
-            {% for user in user_list %}
-                    <td><h4>@{{ user.username }}{% if user == request.user %} (You){% endif %}</h4></td>
-                    <td><h4>{{ user.email }}</h4></td>
-                    <td><h4><a href="{% url 'profiles:user_detail' user.id %}">See profile</a></h4></td>
+            {% for friend in user.profile.get.get_friends %}
+                <tr>
+                    <td><h4>@{{ friend.friend }}</h4></td>
+                    <td><h4>{{ friend.friend.user.email }}</h4></td>
+                    <td><h4><a href="{% url 'profiles:user_detail' friend.user.id %}">See profile</a></h4></td>
                 </tr>
             {% endfor %}
             </tbody>

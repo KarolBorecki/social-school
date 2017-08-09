@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.generic import CreateView, TemplateView
 
 from accounts.forms import UserRegistrationForm, LoginForm, PasswordResetForm
+from accounts.models import Profile
 
 
 class IndexView(TemplateView):
@@ -61,14 +62,16 @@ class RegisterView(View):
             user.set_password(password)
             user.save()
 
+            profile = Profile(user=user)
+            profile.save()
+
             user = authenticate(username=username, password=password)
 
             send_mail(
                 'Social School - Email Activation',
                 'Link to email activation',
                 'karol.boreck@gmail.com',
-                [user_email],
-                fail_silently=False,
+                [user_email]
             )
 
             if user is not None:

@@ -1,24 +1,30 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render
-from django.utils.decorators import method_decorator
+from django.shortcuts import redirect
 from django.views import generic
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
+
+from accounts.models import Profile
 
 
-class AllUsersList(generic.ListView):
+class AllUsersListView(generic.ListView):
     template_name = 'profiles/all_users_list.html'
     model = User
 
 
-class UserDetailsView(generic.View):
+class FriendsListView(generic.ListView):
+    template_name = 'profiles/users_friends.html'
+    model = User
+
+
+class UserDetailView(generic.DetailView):
     template_name = "profiles/user_detail.html"
     model = User
 
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
-
     def post(self, request, *args, **kwargs):
-        user = User.objects.filter(id=self.kwargs.get('pk'))
+        profile = Profile.objects.filter(user=User.objects.filter(id=self.kwargs.get('pk'))).get()
 
+        if 'add_friend' in request.POST:
+            profile.add_as_friend(request.user.profile)
+        elif 'delete_friend' in request.POST:
+            profile.remove_from_friends(request.user.profile)
 
-
+        return redirect('profiles:users_list')

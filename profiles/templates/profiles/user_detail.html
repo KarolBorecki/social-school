@@ -1,7 +1,17 @@
 {% extends "social_school/base.html" %}
 
 {% block body_block %}
-    {{ user }}
+    <h1>{{ user }}</h1>
+    {% for friend in user.profile.friends.all %}
+        <form method="post">
+            {% csrf_token %}
+            {% if not request.user.profile == friend.friend  %}
+                <button class="btn btn-lg btn-block btn-success" type="submit" name="add_friend">+ Add as a friend</button>
+            {% else %}
+                <button class="btn btn-lg btn-block btn-danger" type="submit" name="delete_friend">- Delete friend</button>
+            {% endif %}
+        </form>
+    {% endfor %}
 {% endblock body_block %}
 
 
