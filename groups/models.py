@@ -54,4 +54,4 @@ class Comment(models.Model):
     text = models.TextField()
 
     def __str__(self):
-        return self.text
+        return self.author + " Comment of " + self.post.__str__()

@@ -23,9 +23,12 @@
         <h4>{{ post.comments.0 }}</h4>
         <a href="{% url 'groups:post_details' post.id %}">View All</a>
     {% endfor %}
+<<<<<<< .merge_file_a04100
 
     {% for member in group.members.all %}
         <h3>@{{ member.user }}</h3>
         {% empty %}
     {% endfor %}
+=======
+>>>>>>> .merge_file_a02872
 {% endblock body_block %}

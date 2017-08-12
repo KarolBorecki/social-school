@@ -9,3 +9,4 @@ class HomePage(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return User.objects.all()
+

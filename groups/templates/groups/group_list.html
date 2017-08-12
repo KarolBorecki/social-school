@@ -1,10 +1,12 @@
 {% extends "social_school/base.html" %}
 
-
 {% block body_block %}
+<<<<<<< .merge_file_a03140
 {% if user.is_authenticated %}
     <a href="{% url 'groups:create_group' %}" class="btn btn-md btn-fill btn-warning"><span class="glyphicon glyphicon-plus-sign"></span> Create New Group!</a>
 {% endif %}
+=======
+>>>>>>> .merge_file_a02488
 <div class="container">
 	<div class="list-group">
 		{% for group in group_list %}

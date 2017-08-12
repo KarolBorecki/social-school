@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# noinspection PyUnresolvedReferences
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -145,7 +146,16 @@ DEFAULT_USER_PICTURE_PATH = "accounts/static/img/default-user.png"
 if DEBUG:
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_PORT = 587
-    EMAIL_HOST_USER = 'karol.boreck@gmail.com'
-    EMAIL_HOST_PASSWORD = 'qseft135/K'
+    EMAIL_HOST_USER = 'XXXXXXXXXXXXXXXXX'
+    EMAIL_HOST_PASSWORD = '******'
     EMAIL_USE_TLS = True
-    DEFAULT_FROM_EMAIL = 'karol.boreck@gmail.com'
+    DEFAULT_FROM_EMAIL = 'XXXXXXXXXXXXXXXXX'
+
+FRIENDSHIP_REQUEST_TEXT = 'Invited you as a friend, do you want to have him in your friends list?'
+
+NOTIFICATION_TYPES = {
+    'group post': 'gr_pst',
+    'group post comment': 'gr_pst_com',
+    'private message': 'priv_msg',
+    'friendship request': 'fr_req',
+}
