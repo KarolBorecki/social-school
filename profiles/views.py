@@ -27,8 +27,8 @@ class UserDetailView(generic.DetailView):
         if 'add_friend' in request.POST:
             profile.request_as_friend(request.user.profile)
             invite, created = Notification.objects.\
-                get_or_create(text=FRIENDSHIP_REQUEST_TEXT, from_friend=request.user.profile,
-                              to_friend=profile, notification_type=NOTIFICATION_TYPES['friendship request'])
+                get_or_create(text=FRIENDSHIP_REQUEST_TEXT, from_user=request.user.profile,
+                              to_user=profile, notification_type=NOTIFICATION_TYPES['friendship request'])
             invite.save()
         elif 'delete_friend' in request.POST:
             profile.remove_from_friends(request.user.profile)

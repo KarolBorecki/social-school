@@ -11,3 +11,7 @@ class Notification(models.Model):
     to_user = models.ForeignKey(Profile, related_name='notifications', default=None)
     send_date = models.DateTimeField(default=timezone.now)
     notification_type = models.CharField(max_length=15, default=NOTIFICATION_TYPES['private message'])
+
+    def __str__(self):
+        return self.notification_type + " to " \
+               + self.to_user.__str__() + " from " + self.from_user.__str__()

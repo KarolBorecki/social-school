@@ -2,16 +2,11 @@
 
 {% block body_block %}
     <h1>{{ user }}</h1>
-    {% for friend in user.profile.friends.all %}
-        <form method="post">
-            {% csrf_token %}
-            {% if not request.user.profile == friend.invited  %}
-                <button class="btn btn-lg btn-block btn-success" type="submit" name="add_friend">+ Add as a friend</button>
-            {% else %}
-                <button class="btn btn-lg btn-block btn-danger" type="submit" name="delete_friend">- Delete friend</button>
-            {% endif %}
-        </form>
-    {% endfor %}
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-lg btn-block btn-success" type="submit" name="add_friend">+ Add as a friend</button>
+        <button class="btn btn-lg btn-block btn-danger" type="submit" name="delete_friend">- Delete friend</button>
+    </form>
 {% endblock body_block %}
 
 
