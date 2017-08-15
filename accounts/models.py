@@ -15,12 +15,16 @@ class Profile(models.Model):
         friend, created = Friend.objects.get_or_create(sender=sender, invited=self, is_accepted=False)
         friend.save()
 
-    def accept_as_friend(self, from_friend):
-        from_friend.is_accepted = True
-        to_friend, created = Friend.objects.get_or_create(sender=from_friend.friend, invited=self, is_accepted=True)
+    def accept_as_friend(self, friend):
+        friend.is_accepted = True
+        to_friend, created = Friend.objects.get_or_create(sender=self, invited=friend.sender, is_accepted=True)
 
-        from_friend.save()
+        friend.save()
         to_friend.save()
+
+    @staticmethod
+    def do_not_accept_as_friend(friend):
+        friend.delete()
 
     def remove_from_friends(self, friend, is_done=False):
         Friend.objects.filter(sender=self, invited=friend).delete()
@@ -32,7 +36,7 @@ class Profile(models.Model):
         return self.friends.all()
 
     def get_friendships_requests(self):
-        return self.notifications.filter(notification_type=NOTIFICATION_TYPES['friendship request']).get()
+        return self.notifications.filter(notification_type=NOTIFICATION_TYPES['friendship request']).all()
 
 
 class Friend(models.Model):

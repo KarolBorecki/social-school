@@ -43,16 +43,12 @@
 
                     </ul>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                       role="button" aria-haspopup="true" aria-expanded="false">Invites<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        {% for friendship_request in request.user.profile.get_friendships_requests %}
-                            <li><a href="#">|{{ friendship_request }}</a></li>
-                            <li role="separator" class="divider"></li>
-                        {% endfor %}
-                    </ul>
+
+                <li>
+                    <a href="{% url 'profiles:invites_list' %}" class="dropdown-toggle"
+                       role="button" aria-haspopup="true" aria-expanded="false">Invites</a>
                 </li>
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                        role="button" aria-haspopup="true" aria-expanded="false">@{{ user.username }}<span class="caret"></span></a>

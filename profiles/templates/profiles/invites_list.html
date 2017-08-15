@@ -1,0 +1,41 @@
+{% extends "social_school/base.html" %}
+
+{% block body_block %}
+    <div class="container">
+        <div class="page-header">
+            <h1>All Users</h1>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th><h3>Username</h3></th>
+                <th><h3>E-mail</h3></th>
+                <th><h3></h3></th>
+                <th><h3></h3></th>
+                <th><h3></h3></th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for friendship_request in request.user.profile.get_friendships_requests %}
+                    <tr>
+                        <td><h4>@{{ friendship_request.from_user }}</h4></td>
+                        <td><h4>{{ friendship_request.from_user.user.email }}</h4></td>
+                        <td><h4><a href="{% url 'profiles:user_detail' user.id %}">See profile</a></h4></td>
+
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="friend_id" value="{{ friendship_request.from_user.user.id }}">
+
+                            <td><h4><button class="btn btn-lg btn-block btn-success" type="submit" name="agree">
+                                Agree</button></h4></td>
+                            <td><h4><button class="btn btn-lg btn-block btn-danger" type="submit" name="dont_agree">
+                                Don't Agree</button></h4></td>
+                        </form>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock body_block %}
+
+
