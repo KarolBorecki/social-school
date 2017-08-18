@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import generic, View
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import TemplateView
 
 from accounts.forms import UserRegistrationForm, LoginForm, PasswordResetForm
 from accounts.models import Profile

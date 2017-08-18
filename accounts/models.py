@@ -1,49 +1,44 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.utils import timezone
 
-from social_school.settings import NOTIFICATION_TYPES
+from profiles.models import Notification
+from social_school.settings import NOTIFICATION_TYPES, FRIENDSHIP_REQUEST_TEXT
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
+    friends = models.ManyToManyField(User, related_name='friends', default=None)
 
     def __str__(self):
         return self.user.username
 
-    def request_as_friend(self, sender):
-        friend, created = Friend.objects.get_or_create(sender=sender, invited=self, is_accepted=False)
-        friend.save()
+    def request_as_friend(self, user):
+        notification, created = Notification.objects\
+            .get_or_create(from_user=self.user, to_user=user,
+                           text=FRIENDSHIP_REQUEST_TEXT, notification_type=NOTIFICATION_TYPES['friendship request'])
+        notification.save()
 
-    def accept_as_friend(self, friend):
-        friend.is_accepted = True
-        to_friend, created = Friend.objects.get_or_create(sender=self, invited=friend.sender, is_accepted=True)
+    def accept_as_friend(self, user):
+        self.user.notifications\
+            .filter(from_user=user, notification_type=NOTIFICATION_TYPES['friendship request']).delete()
+        self.friends.add(user)
+        user.profile.friends.add(self.user)
 
-        friend.save()
-        to_friend.save()
+    def do_not_accept_as_friend(self, user):
+        self.user.notifications \
+            .filter(from_user=user, notification_type=NOTIFICATION_TYPES['friendship request']).delete()
 
-    @staticmethod
-    def do_not_accept_as_friend(friend):
-        friend.delete()
-
-    def remove_from_friends(self, friend, is_done=False):
-        Friend.objects.filter(sender=self, invited=friend).delete()
-
-        if not is_done:
-            friend.remove_from_friends(self, True)
+    def remove_from_friends(self, user):
+        self.friends.remove(user)
+        user.profile.friends.remove(self.user)
 
     def get_friends(self):
         return self.friends.all()
 
+    def is_friend(self, user):
+        if user in self.get_friends():
+            return True
+        return False
+
     def get_friendships_requests(self):
-        return self.notifications.filter(notification_type=NOTIFICATION_TYPES['friendship request']).all()
-
-
-class Friend(models.Model):
-    sender = models.ForeignKey(Profile, related_name='friends')
-    invited = models.ForeignKey(Profile)
-    is_accepted = models.BooleanField(default=False)
-    date_of_friend = models.DateTimeField(default=timezone.now)
-
-    def __str__(self):
-        return self.sender.__str__() + " and " + self.invited.__str__() + " Friendship"
+        return self.user.notifications.filter(notification_type=NOTIFICATION_TYPES['friendship request']).all()

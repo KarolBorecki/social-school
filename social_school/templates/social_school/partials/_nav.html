@@ -30,7 +30,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'profiles:users_list' %}">All users</a></li>
                         <li role="separator" class="divider"></li>
-
+                        <li><a href="{% url 'profiles:friends_list' %}">Your friends</a></li>
                     </ul>
                 </li>
 
@@ -51,7 +51,7 @@
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                       role="button" aria-haspopup="true" aria-expanded="false">@{{ user.username }}<span class="caret"></span></a>
+                       role="button" aria-haspopup="true" aria-expanded="false">@{{ request.user.username }}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">My Account</a></li>
                         <li role="separator" class="divider"></li>

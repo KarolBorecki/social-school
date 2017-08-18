@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-from .secret import KEY, EMAIL_PASSWORD, EMAIL
+from .secret import KEY, EMAIL_PASSWORD, EMAIl
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -143,10 +143,10 @@ DEFAULT_USER_PICTURE_PATH = "accounts/static/img/default-user.png"
 if DEBUG:
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_PORT = 587
-    EMAIL_HOST_USER = EMAIL
+    EMAIL_HOST_USER = EMAIl
     EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
     EMAIL_USE_TLS = True
-    DEFAULT_FROM_EMAIL = EMAIL
+    DEFAULT_FROM_EMAIL = EMAIl
 
 FRIENDSHIP_REQUEST_TEXT = 'Invited you as a friend, do you want to have him in your friends list?'
 

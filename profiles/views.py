@@ -1,12 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.decorators.csrf import csrf_protect
 
-from accounts.models import Profile, Friend
-from profiles.models import Notification
-from social_school.settings import FRIENDSHIP_REQUEST_TEXT, NOTIFICATION_TYPES
+from profiles.exceptions import AlreadyInvitedException
 
 
 class AllUsersListView(generic.ListView):
@@ -24,18 +23,15 @@ class InvitesListView(generic.TemplateView):
     template_name = 'profiles/invites_list.html'
 
     def post(self, request, *args, **kwargs):
-        user = request.user.profile
-        sender = User.objects.filter(id=request.POST.get('friend_id', False)).get().profile
-        friend = sender.friends.filter(invited=request.user.profile).get()
+        user = request.user
+        print(type(request.POST['friend_id']))
+        print(request.POST['friend_id'])
+        friend = User.objects.filter(username=request.POST['friend_id']).get()
 
         if 'agree' in request.POST:
-            user.accept_as_friend(friend)
+            user.profile.accept_as_friend(friend)
         elif 'dont_agree' in request.POST:
-            user.do_not_accept_as_friend(friend)
-
-        friendship_request = Notification.objects.filter(notification_type=NOTIFICATION_TYPES['friendship request'],
-                                                         from_user=sender, to_user=user)
-        friendship_request.delete()
+            user.profile.do_not_accept_as_friend(friend)
         return redirect('profiles:invites_list')
 
 
@@ -45,20 +41,17 @@ class UserDetailView(generic.DetailView):
     model = User
 
     def post(self, request, *args, **kwargs):
-        profile = Profile.objects.filter(user=User.objects.filter(id=self.kwargs.get('pk'))).get()
-        friend_obj = profile.friends.filter(invited=request.user.profile)
+        user = request.user
+        friend = User.objects.filter(id=self.kwargs.get('pk')).get()
 
-        if 'add_friend' in request.POST:
-            if not friend_obj.exists():
-                profile.request_as_friend(request.user.profile)
-                invite, created = Notification.objects.\
-                    get_or_create(text=FRIENDSHIP_REQUEST_TEXT, from_user=request.user.profile,
-                                  to_user=profile, notification_type=NOTIFICATION_TYPES['friendship request'])
-                invite.save()
-            else:
-                request.user.profile.accept_as_friend(friend_obj.get())
+        if not friend.notifications.filter(from_user=user).exists():
+            if 'add_friend' in request.POST:
+                user.profile.request_as_friend(friend)
 
-        elif 'delete_friend' in request.POST:
-            profile.remove_from_friends(request.user.profile)
+            elif 'delete_friend' in request.POST:
+                user.profile.remove_from_friends(friend)
+        else:
+            #Need to think about better errors
+            raise AlreadyInvitedException(friend)
 
-        return redirect('profiles:users_list')
+        return redirect('profiles:user_detail', friend.id)

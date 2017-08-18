@@ -14,11 +14,11 @@
             </tr>
             </thead>
             <tbody>
-            {% for friend in user.profile.get.get_friends %}
+            {% for friend in request.user.profile.get_friends %}
                 <tr>
-                    <td><h4>@{{ friend.friend }}</h4></td>
-                    <td><h4>{{ friend.friend.user.email }}</h4></td>
-                    <td><h4><a href="{% url 'profiles:user_detail' friend.user.id %}">See profile</a></h4></td>
+                    <td><h4>@{{ friend }}</h4></td>
+                    <td><h4>{{ friend.email }}</h4></td>
+                    <td><h4><a href="{% url 'profiles:user_detail' friend.id %}">See profile</a></h4></td>
                 </tr>
             {% endfor %}
             </tbody>
