@@ -24,9 +24,7 @@ class InvitesListView(generic.TemplateView):
 
     def post(self, request, *args, **kwargs):
         user = request.user
-        print(type(request.POST['friend_id']))
-        print(request.POST['friend_id'])
-        friend = User.objects.filter(username=request.POST['friend_id']).get()
+        friend = User.objects.filter(username=request.POST['friend_username']).get()
 
         if 'agree' in request.POST:
             user.profile.accept_as_friend(friend)

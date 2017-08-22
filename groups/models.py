@@ -39,7 +39,7 @@ class GroupMember(models.Model):
 
 class Post(models.Model):
     group = models.ForeignKey(Group, on_delete=models.DO_NOTHING, related_name='posts')
-    author = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=get_user_model())
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     title = models.CharField(default='', max_length=200)
     text = models.TextField(default='')
     date = models.DateTimeField(default=timezone.now)

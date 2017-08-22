@@ -1,6 +1,9 @@
 {% extends "social_school/base.html" %}
 
 {% block body_block %}
+    <a href="{% url 'groups:add_user' group.slug %}" class="btn btn-md btn-fill btn-warning">
+        <span class="glyphicon glyphicon-plus-sign"></span> Add user</a>
+
     <h1>{{ group.name }}</h1>
 
       <form method="POST">
@@ -12,23 +15,17 @@
         <label for="inputText" class="sr-only">Text</label>
         <input type="text" id="inputText" class="form-control" name="text" placeholder="Text" required>
 
-        <button class="btn btn-lg btn-block btn-success" type="submit" name="post">Post</button>
+        <button class="btn btn-lg btn-fill btn-success" type="submit" name="post">Post</button>
       </form>
 
-    {% for post in group.posts.all %}
-        <h2>{{ post.author.username }} <small>{{ post.date }}</small></h2>
-        <h3>{{ post.title }}</h3>
-        <h3>{{ post.text }}</h3>
-        <h4>Comments:</h4>
-        <h4>{{ post.comments.0 }}</h4>
-        <a href="{% url 'groups:post_details' post.id %}">View All</a>
+    {% for post in group.posts.all reversed %}
+        {% include 'groups/partials/post_template.html' %}
     {% endfor %}
-<<<<<<< .merge_file_a04100
 
-    {% for member in group.members.all %}
-        <h3>@{{ member.user }}</h3>
-        {% empty %}
-    {% endfor %}
-=======
->>>>>>> .merge_file_a02872
+    <div class="members_list">
+        {% for member in group.memberships.all %}
+            <h3>@{{ member.user }}</h3>
+            {% empty %}
+        {% endfor %}
+    </div>
 {% endblock body_block %}

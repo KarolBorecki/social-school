@@ -1,0 +1,37 @@
+{% extends "social_school/base.html" %}
+
+{% block body_block %}
+    <div class="container">
+        <div class="page-header">
+            <h1>Add users to group:</h1>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th><h3>Username</h3></th>
+                <th><h3>Email</h3></th>
+                <th><h3></h3></th>
+            </tr>
+            </thead>
+            <tbody>
+            <form method="post">
+                {% csrf_token %}
+                {% for friend in request.user.profile.get_friends %}
+                    {% if not friend in group_members.all  %}
+                        <tr>
+                            <td><h4>@<a href="{% url 'profiles:user_detail' friend.id %}">{{ friend }}</a></h4></td>
+                            <td><h4>{{ friend.email }}</h4></td>
+                            <td><h4>
+                                <input type="checkbox" name="user_id" value="{{ friend.pk }}"/>
+                            </h4></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <button type="submit" name="add_users" class="btn btn-primary btn-large">Add users</button>
+            </form>
+            </tbody>
+        </table>
+    </div>
+{% endblock body_block %}
+
+

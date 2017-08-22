@@ -24,7 +24,7 @@
 
                         <form method="post">
                             {% csrf_token %}
-                            <input type="hidden" name="friend_id" value="{{ friendship_request.from_user }}">
+                            <input type="hidden" name="friend_username" value="{{ friendship_request.from_user }}">
 
                             <td><h4><button class="btn btn-lg btn-block btn-success" type="submit" name="agree">
                                 Agree</button></h4></td>

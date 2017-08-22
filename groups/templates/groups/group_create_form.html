@@ -1,19 +1,10 @@
 {% extends "social_school/base.html" %}
 
 {% block body_block %}
-<<<<<<< .merge_file_a04580
 <h4>Create A New Group</h4>
   <form method="POST" action="{% url 'groups:create_group' %}" id="groupForm">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Create" class="btn btn-primary btn-large">
   </form>
-=======
-    <h4>Create A New Group</h4>
-    <form method="POST" action="{% url 'groups:create_group' %}" id="groupForm">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Create" class="btn btn-primary btn-large">
-    </form>
->>>>>>> .merge_file_a01428
 {% endblock body_block %}
