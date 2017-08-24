@@ -38,7 +38,7 @@ class GroupMember(models.Model):
 
 
 class Post(models.Model):
-    group = models.ForeignKey(Group, on_delete=models.DO_NOTHING, related_name='posts')
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='posts')
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     title = models.CharField(default='', max_length=200)
     text = models.TextField(default='')
@@ -49,7 +49,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, related_name='comments')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE,related_name='comments')
     author = models.CharField(max_length=200)
     text = models.TextField()
 

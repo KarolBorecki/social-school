@@ -1,24 +1,29 @@
 {% extends "social_school/base.html" %}
 
 {% block body_block %}
-{% if user.is_authenticated %}
-    <a href="{% url 'groups:create_group' %}" class="btn btn-md btn-fill btn-warning"><span class="glyphicon glyphicon-plus-sign"></span> Create New Group!</a>
-{% endif %}
-<div class="container">
-	<div class="list-group">
-		{% for group in groups %}
-		  <a class="list-group-item" href="{% url 'groups:group_timeline' slug=group.group.slug %}">
-			     <h3 class="list-group-item-heading">{{ group.group.name }}</h3>
-			<div class="list-group-item-text">
-				{{ group.group.description_html|safe }}
-				<div class="row">
-					<span class="badge">{{ group.group.members.count }}</span> member{{ group.group.members.count|pluralize }}
-				</div>
-			</div>
-		</a>
-		{% endfor %}
-	</div>
-</div>
+    {% if user.is_authenticated %}
+        <a href="{% url 'groups:create_group' %}" class="btn btn-md btn-fill btn-warning"><span class="glyphicon glyphicon-plus-sign"></span> Create New Group!</a>
+    {% endif %}
+    <div class="container">
+        <div class="list-group">
+            {% for group in groups %}
+                <a class="list-group-item" href="{% url 'groups:group_timeline' slug=group.group.slug %}">
+                    <h3 class="list-group-item-heading">{{ group.group.name }}</h3>
+                    <div class="list-group-item-text">
+                        {{ group.group.description_html|safe }}
+                        <div class="row">
+                            <span class="badge">{{ group.group.members.count }}</span> member{{ group.group.members.count|pluralize }}
+                        </div>
+                    </div>
+                </a>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="group_pk" value="{{ group.pk }}"/>
+                    <button class="btn btn-xs btn-fill btn-danger" type="submit" name="leave">leave</button>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock body_block %}
 
 

@@ -2,8 +2,8 @@
 
 {% block body_block %}
     <a href="{% url 'groups:add_user' group.slug %}" class="btn btn-md btn-fill btn-warning">
-        <span class="glyphicon glyphicon-plus-sign"></span> Add user</a>
-
+        <span class="glyphicon glyphicon-plus-sign"> Add user</span>
+    </a>
     <h1>{{ group.name }}</h1>
 
       <form method="POST">
